@@ -7,20 +7,27 @@ const studySchema = new mongoose.Schema({
         require: true,
         max: 50,
     },
-    single_study_time: {
-        type: Number,
-        require: true,
+    duration:{
+        type: String,
+        require: true
     },
-    all_study_time:{
-        type: Number,
-        require: true,
+    start_study_time: {
+        type: String,
     },
-    time : { type : Date, default: Date.now }
+    end_study_time:{
+        type: String,
+    },
+    energy: {
+        type: String,
+        require: true
+    }
     
-},{timestamps: { 
-    createdAt: 'created', 
-    updatedAt: 'updatezd' 
-} })
+    
+})
+
+
+
+
 
 
 

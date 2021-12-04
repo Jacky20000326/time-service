@@ -2,6 +2,7 @@
 const api = require("express").Router();
 const jwt = require("jsonwebtoken")
 api.post('/authenticate',(req,res)=>{
+        console.log(req.body)
         var token = req.body.token
         // 可能從userDefault來的
         if(token){
@@ -9,11 +10,13 @@ api.post('/authenticate',(req,res)=>{
                 if(err){
                     res.json({ success: false, message: 'Failed to authenticate token.'})
                 }else{
+                    console.log(decoded)
+                    
                     res.json({decoded})
                 }
             })
         }else{
-            console.log()
+            console.log("使用者沒有儲存過token")
         }
     })
 

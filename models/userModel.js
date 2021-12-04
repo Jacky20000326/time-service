@@ -6,13 +6,6 @@ const userSchema = new mongoose.Schema({
     user_ID:{
         type: String,
     },
-    name:{
-        type: String,
-        require: true
-    },
-    user_name:{
-        type: String
-    },
     email:{
         type: String,
         require: true
@@ -21,16 +14,39 @@ const userSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    
+    name:{
+        type: String,
+        require: true
+    },
     friend: [{
         type : mongoose.Types.ObjectId,
         ref: "User"
     }],
-    studty: [{
+    all_study_info: [{
         type : mongoose.Types.ObjectId,
         ref: study_Model
-    }]
-    // 
+    }],
+    level: {
+        type: String,
+        require: true
+    },
+    bulb:{
+        type: String,
+        require: true
+    },
+    all_energy:{
+        type: Number,
+        require: true
+    },
+    Month_energy: {
+        type: String,
+        require: true
+    },
+    Founding_time:{
+        type: String,
+        require: true
+    }
+    // 新增總能量
 })
 
 // find db have same user or not
@@ -44,9 +60,6 @@ userSchema.statics.findSameInfoIndb = function(user,callback){
     })
 }
 
-
-
-
 // make friend with other user
 userSchema.statics.findUser = function(userID,callback){
     this.findOne({"_id":userID},(err,otherUser)=>{
@@ -58,7 +71,7 @@ userSchema.statics.findUser = function(userID,callback){
         }else{
             console.log("Cannot find this user")
         }
-    })
+    }).populate("all_study_info")
 }
 
 // 好友加入動態方法

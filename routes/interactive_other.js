@@ -42,23 +42,52 @@ Route.post("/deleteFriend",(req,res)=>{
             })
             Friend.friend.splice(myIndex,1)
             Friend.save()
+            console.log("delete success")
         })
-       
     })
 })
 
 // inquire friend info
 Route.post("/find_all_friends",(req,res)=>{
-    user.findOne({"_id" : req.body.my_id},(err,user)=>{
+    user.findOne({"_id" : req.body._id},(err,User)=>{
         if(err){
             console.log(err)
         }else{
-            console.log(user)
-            res.json({user})
+            console.log(User)
+            if(User.friend.length == 0){
+                res.send("no friend")
+                console.log("no friend")
+            }else{
+                let sortingArray = []
+                sortingArray.push(User)
+                sortingArray.sort((a,b)=>{
+                    return b.Month_energy - a.Month_energy
+                })
+                res.json(sortingArray)
+                console.log(User)
+                console.log("my friend")
+            }
+        
         }
     }).populate("friend")
     
 })
+
+Route.get('/find_all_user',(req,res)=>{
+    user.find({},(err,User)=>{
+        if(err){
+
+            console.log(err)
+        }else{
+            User.sort((a,b)=>{
+                return b.Month_energy - a.Month_energy
+            })
+            console.log(User)
+            res.json(User)
+        }
+    })
+})
+
 
 
 module.exports = Route
